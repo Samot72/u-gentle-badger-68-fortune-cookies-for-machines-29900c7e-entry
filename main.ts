@@ -34,6 +34,9 @@ function validate(text: string): void {
     if (code < 0x20 || code === 0x7f) {
       throw new Error("entry must not contain control characters");
     }
+    if (code === 0xfeff || code === 0x00a0 || (code >= 0x200b && code <= 0x200f)) {
+      throw new Error("entry must not contain invisible formatting characters");
+    }
   }
 }
 
