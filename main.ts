@@ -23,6 +23,18 @@ function validate(text: string): void {
   if (text.includes("\n") || text.includes("\r")) {
     throw new Error("entry must be a single line");
   }
+  if (/\s{2,}/.test(text)) {
+    throw new Error("entry must not contain double spaces");
+  }
+  if (text !== text.trim()) {
+    throw new Error("entry must not start or end with whitespace");
+  }
+  for (const ch of text) {
+    const code = ch.codePointAt(0);
+    if (code < 0x20 || code === 0x7f) {
+      throw new Error("entry must not contain control characters");
+    }
+  }
 }
 
 function main(): void {
